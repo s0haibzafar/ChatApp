@@ -1,1 +1,26 @@
-<p>login works!</p>
+<div class="form-content mat-elevation-z5">
+    <h1>Login!</h1>
+    <form [formGroup]="reactiveLoginForm">
+        <mat-form-field>
+            <input matInput placeholder="Enter email" formControlName="email" />
+            <mat-error *ngIf="email?.errors?.['required']">
+                Email is required
+            </mat-error>
+            <mat-error *ngIf="email?.errors?.['email']">
+                Please enter correct email format
+            </mat-error>
+        </mat-form-field>
+        <mat-form-field>
+            <input matInput placeholder="Enter password" formControlName="password" type="password" />
+            <mat-error *ngIf="password?.errors?.['required']">
+                Password is required
+            </mat-error>
+        </mat-form-field>
+        <div class="center margin-top">
+            <button mat-raised-button color="primary" type="submit">
+                Login
+            </button>
+        </div>
+        <span class="center margin-top">New to our plateform? <a routerLink="sign-up" class="sign-up-link">Sign Up!</a></span>
+    </form>
+</div>
