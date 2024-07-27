@@ -17,6 +17,16 @@ import { HomeComponent } from './components/home/home.component';
 import { LoginComponent } from './components/login/login.component';
 import { SignupComponent } from './components/signup/signup.component';
 
+//hot-toast
+import { HotToastModule } from '@ngneat/hot-toast';
+
+//firebase
+import { environment } from "src/environments/environment";
+// import { AngularFireModule } from '@angular/fire/compat';
+// import { AngularFirestoreModule } from "@angular/fire/compat/firestore";
+import { provideAuth,getAuth } from '@angular/fire/auth';
+import { initializeApp,provideFirebaseApp } from '@angular/fire/app';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -36,6 +46,9 @@ import { SignupComponent } from './components/signup/signup.component';
     MatButtonModule,
     MatFormFieldModule,
     MatInputModule,
+    [HotToastModule.forRoot()],
+    provideFirebaseApp(() => initializeApp(environment.firebaseConfig)),
+    provideAuth(() => getAuth()),
     
   ],
   providers: [],
