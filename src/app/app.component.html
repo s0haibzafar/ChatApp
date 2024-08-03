@@ -9,9 +9,11 @@
     </ng-container>
 
     <ng-template #logoutButton>
-        <button mat-button (click)="logout()">
-            <mat-icon>login</mat-icon>
-            LogOut
+        <button mat-button  [matMenuTriggerFor]="useMenu" >
+            <mat-icon>account_circle</mat-icon>
+            {{user.displayName}}
+            <mat-icon>expand_more</mat-icon>
+            
         </button>
     </ng-template>
 
@@ -20,3 +22,7 @@
 <div class="content">
     <router-outlet></router-outlet>
 </div>
+
+<mat-menu #useMenu="matMenu">
+  <button mat-menu-item (click)="logout()" >Logout</button>
+</mat-menu>

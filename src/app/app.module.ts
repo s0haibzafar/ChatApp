@@ -7,6 +7,7 @@ import {MatIconModule} from '@angular/material/icon';
 import {MatButtonModule} from '@angular/material/button';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
+import {MatMenuModule} from '@angular/material/menu';
 
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -49,6 +50,7 @@ import { initializeApp,provideFirebaseApp } from '@angular/fire/app';
     [HotToastModule.forRoot()],
     provideFirebaseApp(() => initializeApp(environment.firebaseConfig)),
     provideAuth(() => getAuth()),
+    MatMenuModule
     
   ],
   providers: [],
