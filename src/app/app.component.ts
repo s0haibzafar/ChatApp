@@ -8,9 +8,11 @@ import { AuthenticationService } from './services/authentication.service';
 })
 export class AppComponent {
   title = 'test-project';
+  user:any
 
   constructor(protected _authService: AuthenticationService,) {
     this._authService.isLoggedIn !== true
+    this.user =  this._authService.getCurrentLoginUser();
   }
 
   logout() {
