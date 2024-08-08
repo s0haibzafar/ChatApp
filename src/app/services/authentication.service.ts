@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
-import { Auth, authState, createUserWithEmailAndPassword, 
-  onAuthStateChanged, signInWithEmailAndPassword, updateProfile } from '@angular/fire/auth';
+import {Auth, authState, createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword, updateProfile,UserInfo} from '@angular/fire/auth';
 import { Router } from '@angular/router';
-import { from, switchMap } from 'rxjs';
+import { concatMap, from, Observable, of, switchMap } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +9,7 @@ import { from, switchMap } from 'rxjs';
 export class AuthenticationService {
 
   UserData = authState(this.auth);
-
+  currentUser$ = authState(this.auth);
 
   //UserData: any;
 
@@ -33,10 +32,9 @@ export class AuthenticationService {
     return from(signInWithEmailAndPassword(this.auth, username, password));
   }
 
-  
   signUp(name: string, email: string, password: string) {
     return from(createUserWithEmailAndPassword(this.auth, email, password)).pipe(
-      switchMap(({user})=>updateProfile(user, { displayName: name } ))
+      switchMap(({user})=>updateProfile(user, { displayName: name }))
     );
   }
 
@@ -56,6 +54,18 @@ export class AuthenticationService {
     const user = JSON.parse(token as string);
     console.log("1-----------------> ",user)
     return user;
+  }
+
+
+  updateProfileData(profileData: Partial<UserInfo>): Observable<any> {
+    const user = this.auth.currentUser;
+    return of(user).pipe(
+      concatMap((user) => {
+        if (!user) throw new Error('Not authenticated');
+
+        return updateProfile(user, profileData);
+      })
+    );
   }
 
 }
