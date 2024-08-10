@@ -1,1 +1,1 @@
-<h1 *ngIf="user"> WellCome to our app , {{ user.displayName }}! </h1>
+<h1 *ngIf="user$ | async as user" > WellCome to our app , {{ user?.displayName }}! </h1>
