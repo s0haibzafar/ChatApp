@@ -30,6 +30,7 @@ import { initializeApp,provideFirebaseApp } from '@angular/fire/app';
 import { provideStorage, getStorage } from "@angular/fire/storage"
 import { ProfileComponent } from './components/profile/profile.component';
 import { getFirestore, provideFirestore } from '@angular/fire/firestore';
+import { ChatComponent } from './components/chat/chat.component';
 
 @NgModule({
   declarations: [
@@ -38,7 +39,8 @@ import { getFirestore, provideFirestore } from '@angular/fire/firestore';
     HomeComponent,
     LoginComponent,
     SignupComponent,
-    ProfileComponent
+    ProfileComponent,
+    ChatComponent
   ],
   imports: [
     BrowserModule,
