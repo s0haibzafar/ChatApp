@@ -2,7 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { HotToastService } from '@ngneat/hot-toast';
+import { switchMap } from 'rxjs';
 import { AuthenticationService } from 'src/app/services/authentication.service';
+import { UserService } from 'src/app/services/user.service';
 
 export function passwordMatchValidator(): ValidatorFn {
 
@@ -37,6 +39,7 @@ export class SignupComponent implements OnInit {
 
   constructor( 
     protected _authService: AuthenticationService,
+    protected _userService: UserService,
     protected router: Router,
     private toast: HotToastService
   ) { }
@@ -50,7 +53,12 @@ export class SignupComponent implements OnInit {
     }
 
     const { name, email, password } = this.signUpForm.value;
-    this._authService.signUp(name ? name : '',  email ? email : '', password ? password : '').pipe(
+    this._authService.signUp(email , password ? password : '').pipe(
+      //switchMap(({user : {uid}})=>  this._userService.addUser({uid , email, displayName: name })),
+      switchMap(({ user: { uid } }) =>
+        this._userService.addUser({ uid, email : email ?? ''  , displayName: name?? ''  })
+      ),
+
       this.toast.observe({
         success: "Congrates! you are signUp ",
         loading: "Signing Up...",
