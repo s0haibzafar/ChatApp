@@ -1,19 +1,21 @@
 <mat-toolbar color="primary">
     Sign Up Flow With Firebase
 
-    <ng-container *ngIf="_authService.isLoggedIn !== true; else logoutButton;">
-        <button mat-button routerLink="login">
-            <mat-icon>login</mat-icon>
-            Login
+    <ng-container *ngIf="user$ | async  as user; else logoutButton;">
+        <button mat-button [matMenuTriggerFor]="useMenu">
+            <!-- <mat-icon>account_circle</mat-icon> -->
+            <img width="30" height="30" class="profile-img-toolbar mat-elevation-z1"
+            [src]="user.photoURL ?? '/assets/images/profile.jpg'" />
+
+            {{user.displayName}}
+            <mat-icon>expand_more</mat-icon>
         </button>
     </ng-container>
 
     <ng-template #logoutButton>
-        <button mat-button  [matMenuTriggerFor]="useMenu" >
-            <mat-icon>account_circle</mat-icon>
-            {{user.displayName}}
-            <mat-icon>expand_more</mat-icon>
-            
+        <button mat-button routerLink="login">
+            <mat-icon>login</mat-icon>
+            Login
         </button>
     </ng-template>
 
@@ -24,5 +26,16 @@
 </div>
 
 <mat-menu #useMenu="matMenu">
-  <button mat-menu-item (click)="logout()" >Logout</button>
+    <button mat-menu-item routerLink="profile">
+        <mat-icon>account_circle</mat-icon>
+        Profile
+    </button>
+    <button mat-menu-item routerLink="home">
+        <mat-icon>home</mat-icon>
+        Home
+    </button>
+    <button mat-menu-item (click)="logout()">
+        <mat-icon>logout</mat-icon>
+        Logout
+    </button>
 </mat-menu>

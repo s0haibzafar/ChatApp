@@ -1,5 +1,6 @@
 import { Component, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { AuthenticationService } from 'src/app/services/authentication.service';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-home',
@@ -8,17 +9,17 @@ import { AuthenticationService } from 'src/app/services/authentication.service';
 })
 export class HomeComponent implements OnInit, OnChanges {
 
-  user: any;
+  user$ = this.userService.currentUserProfile$;
 
-  constructor(protected _authService: AuthenticationService) {
+  constructor(protected _authService: AuthenticationService,
+    protected userService: UserService
+  ) {
   }
 
   ngOnInit(): void {
-    this.user = this._authService.getCurrentLoginUser();
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    this.user = this._authService.getCurrentLoginUser();
   }
 
 }

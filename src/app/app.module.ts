@@ -29,6 +29,7 @@ import { provideAuth,getAuth } from '@angular/fire/auth';
 import { initializeApp,provideFirebaseApp } from '@angular/fire/app';
 import { provideStorage, getStorage } from "@angular/fire/storage"
 import { ProfileComponent } from './components/profile/profile.component';
+import { getFirestore, provideFirestore } from '@angular/fire/firestore';
 
 @NgModule({
   declarations: [
@@ -54,6 +55,7 @@ import { ProfileComponent } from './components/profile/profile.component';
     provideFirebaseApp(() => initializeApp(environment.firebaseConfig)),
     provideAuth(() => getAuth()),
     provideStorage(()=> getStorage()),
+    provideFirestore(()=> getFirestore()),
     MatMenuModule
     
   ],
