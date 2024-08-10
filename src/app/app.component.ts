@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { AuthenticationService } from './services/authentication.service';
+import { UserService } from './services/user.service';
 
 @Component({
   selector: 'app-root',
@@ -8,12 +9,12 @@ import { AuthenticationService } from './services/authentication.service';
 })
 export class AppComponent {
   title = 'test-project';
-  user:any
+  user$ = this.userService.currentUserProfile$;
 
-  constructor(protected _authService: AuthenticationService,) {
-    this._authService.isLoggedIn !== true
-    this.user =  this._authService.getCurrentLoginUser();
-  }
+  constructor(
+    protected _authService: AuthenticationService,
+    private userService:UserService
+  ) {}
 
   logout() {
     this._authService.logout();
