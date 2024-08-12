@@ -8,6 +8,7 @@ import {MatButtonModule} from '@angular/material/button';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
 import {MatMenuModule} from '@angular/material/menu';
+import {MatAutocompleteModule} from '@angular/material/autocomplete';
 
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -58,7 +59,9 @@ import { ChatComponent } from './components/chat/chat.component';
     provideAuth(() => getAuth()),
     provideStorage(()=> getStorage()),
     provideFirestore(()=> getFirestore()),
-    MatMenuModule
+    MatMenuModule,
+    MatAutocompleteModule,
+
     
   ],
   providers: [],
