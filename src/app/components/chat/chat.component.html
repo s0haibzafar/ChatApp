@@ -1,1 +1,19 @@
-<p>chat works!</p>
+<div class="chat-container">
+    <div class="chat-list mat-elevation-z5">
+        <div class="searchInput">
+            <mat-form-field>
+                <input 
+                matInput placeholder="Search for users..." 
+                [formControl]="searchControl"
+                [matAutocomplete]="users"
+                />
+            </mat-form-field>
+            <mat-autocomplete #users="matAutocomplete">
+                <mat-option *ngFor="let user of users$ | async " (click)="createChat(user)">
+                    {{ user.displayName }}
+                </mat-option>
+            </mat-autocomplete>
+        </div>
+    </div>
+    <div class="messages mat-elevation-z5"></div>
+</div>
