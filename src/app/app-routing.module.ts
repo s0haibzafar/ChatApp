@@ -31,7 +31,7 @@ const routes: Routes = [
   {
     path: 'chat',
     component: ChatComponent,
-    // ...canActivate(redirectToLogIn)
+    ...canActivate(redirectToLogIn)
   },
   {
     path: 'login',
