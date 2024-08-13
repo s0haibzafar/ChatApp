@@ -9,6 +9,8 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
 import {MatMenuModule} from '@angular/material/menu';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
+import {MatListModule} from '@angular/material/list';
+import { MatDividerModule } from '@angular/material/divider';
 
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -61,6 +63,8 @@ import { ChatComponent } from './components/chat/chat.component';
     provideFirestore(()=> getFirestore()),
     MatMenuModule,
     MatAutocompleteModule,
+    MatListModule,
+    MatDividerModule
 
     
   ],
