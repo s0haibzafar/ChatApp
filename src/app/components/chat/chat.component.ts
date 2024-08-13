@@ -29,6 +29,9 @@ export class ChatComponent implements OnInit {
     )
   );
 
+
+  myChats$ = this.chatService.myChats$;
+   
   constructor(private userService: UserService,
     private chatService: ChatService
   ) { 
