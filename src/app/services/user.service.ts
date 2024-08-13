@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { ProfileUser } from '../models/user/user';
 import { from, Observable, of, switchMap } from 'rxjs';
-import { Firestore, doc, docData, setDoc, updateDoc  } from '@angular/fire/firestore'
+import { Firestore, collectionData, doc, docData, query, setDoc, updateDoc  } from '@angular/fire/firestore'
 import { AuthenticationService } from './authentication.service';
+import { collection } from 'firebase/firestore';
 
 @Injectable({
   providedIn: 'root'
@@ -34,5 +35,11 @@ export class UserService {
     return from(updateDoc(ref, { ...user }));
   }
   
+  //chat
+   get allUsers$():Observable<ProfileUser[]> {
+    const ref = collection(this.firestore, "users");
+    const queryAll = query(ref);
+    return collectionData(queryAll) as Observable<ProfileUser[]>;
+   }
 
 }

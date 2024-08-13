@@ -8,6 +8,9 @@ import {MatButtonModule} from '@angular/material/button';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
 import {MatMenuModule} from '@angular/material/menu';
+import {MatAutocompleteModule} from '@angular/material/autocomplete';
+import {MatListModule} from '@angular/material/list';
+import { MatDividerModule } from '@angular/material/divider';
 
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -30,6 +33,7 @@ import { initializeApp,provideFirebaseApp } from '@angular/fire/app';
 import { provideStorage, getStorage } from "@angular/fire/storage"
 import { ProfileComponent } from './components/profile/profile.component';
 import { getFirestore, provideFirestore } from '@angular/fire/firestore';
+import { ChatComponent } from './components/chat/chat.component';
 
 @NgModule({
   declarations: [
@@ -38,7 +42,8 @@ import { getFirestore, provideFirestore } from '@angular/fire/firestore';
     HomeComponent,
     LoginComponent,
     SignupComponent,
-    ProfileComponent
+    ProfileComponent,
+    ChatComponent
   ],
   imports: [
     BrowserModule,
@@ -56,7 +61,11 @@ import { getFirestore, provideFirestore } from '@angular/fire/firestore';
     provideAuth(() => getAuth()),
     provideStorage(()=> getStorage()),
     provideFirestore(()=> getFirestore()),
-    MatMenuModule
+    MatMenuModule,
+    MatAutocompleteModule,
+    MatListModule,
+    MatDividerModule
+
     
   ],
   providers: [],
