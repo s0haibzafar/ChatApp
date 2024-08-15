@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { combineLatest, map, startWith } from 'rxjs';
+import { combineLatest, filter, map, startWith, switchMap } from 'rxjs';
 import { ProfileUser } from 'src/app/models/user/user';
 import { ChatService } from 'src/app/services/chat.service';
 import { UserService } from 'src/app/services/user.service';
@@ -13,6 +13,8 @@ import { UserService } from 'src/app/services/user.service';
 export class ChatComponent implements OnInit {
 
   searchControl = new FormControl('');
+  chatListControl = new FormControl('');
+  messageControl = new FormControl('');
 
   user$ = this.userService.currentUserProfile$;
   // users$ = this.userService.allUsers$;
@@ -31,7 +33,23 @@ export class ChatComponent implements OnInit {
 
 
   myChats$ = this.chatService.myChats$;
-   
+  
+  selectedChat$ = combineLatest([ 
+    this.chatListControl.valueChanges,
+    this.myChats$
+  ]).pipe(
+    map(([value, chats]) => 
+      chats.find(c => 
+        c.id === (value && value[0])
+      )
+    )
+  );
+  
+  messages$= this.chatListControl.valueChanges.pipe(
+    map(value => value?.[0]),
+    switchMap(chatId => this.chatService.getChatMessages$(chatId? chatId : '123' ))
+  );
+
   constructor(private userService: UserService,
     private chatService: ChatService
   ) { 
@@ -43,6 +61,16 @@ export class ChatComponent implements OnInit {
 
   createChat(otherUser: ProfileUser) {
     this.chatService.createChat(otherUser).subscribe();
+  }
+
+  sendMessage(){
+    const message = this.messageControl.value;
+    const selectedChatId = this.chatListControl.value?.[0];
+
+    if(message && selectedChatId){
+      this.chatService.addChatMessage(selectedChatId, message).subscribe();
+      this.messageControl.setValue('');
+    }
   }
 
 }
