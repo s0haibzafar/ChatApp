@@ -34,6 +34,8 @@ import { provideStorage, getStorage } from "@angular/fire/storage"
 import { ProfileComponent } from './components/profile/profile.component';
 import { getFirestore, provideFirestore } from '@angular/fire/firestore';
 import { ChatComponent } from './components/chat/chat.component';
+import { DateDisplayPipe } from './pipes/date-display.pipe';
+import { DatePipe } from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -43,7 +45,8 @@ import { ChatComponent } from './components/chat/chat.component';
     LoginComponent,
     SignupComponent,
     ProfileComponent,
-    ChatComponent
+    ChatComponent,
+    DateDisplayPipe
   ],
   imports: [
     BrowserModule,
@@ -68,7 +71,7 @@ import { ChatComponent } from './components/chat/chat.component';
 
     
   ],
-  providers: [],
+  providers: [DatePipe],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
