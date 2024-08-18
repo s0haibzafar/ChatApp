@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { combineLatest, filter, map, startWith, switchMap } from 'rxjs';
+import { combineLatest, filter, map, startWith, switchMap, tap } from 'rxjs';
 import { ProfileUser } from 'src/app/models/user/user';
 import { ChatService } from 'src/app/services/chat.service';
 import { UserService } from 'src/app/services/user.service';
@@ -11,6 +11,8 @@ import { UserService } from 'src/app/services/user.service';
   styleUrls: ['./chat.component.css']
 })
 export class ChatComponent implements OnInit {
+
+  @ViewChild("endOfChat") endOfChat!: ElementRef; 
 
   searchControl = new FormControl('');
   chatListControl = new FormControl('');
@@ -47,7 +49,10 @@ export class ChatComponent implements OnInit {
   
   messages$= this.chatListControl.valueChanges.pipe(
     map(value => value?.[0]),
-    switchMap(chatId => this.chatService.getChatMessages$(chatId? chatId : '123' ))
+    switchMap(chatId => this.chatService.getChatMessages$(chatId? chatId : '123' )),
+    tap(()=>{
+      this.scrollToBottom();
+    })
   );
 
   constructor(private userService: UserService,
@@ -68,9 +73,19 @@ export class ChatComponent implements OnInit {
     const selectedChatId = this.chatListControl.value?.[0];
 
     if(message && selectedChatId){
-      this.chatService.addChatMessage(selectedChatId, message).subscribe();
+      this.chatService.addChatMessage(selectedChatId, message).subscribe(()=>{
+        this.scrollToBottom();
+      });
       this.messageControl.setValue('');
     }
+  }
+
+  scrollToBottom(){
+    setTimeout(()=>{
+      if(this.endOfChat){
+        this.endOfChat.nativeElement.scrollIntoView({behaviour: "smooth"})
+      }
+    }, 100);
   }
 
 }
